@@ -113,7 +113,7 @@ export default function App() {
                   }}
                 >
                   <Typography
-                    className={eatable == "Yes" ? "textYes" : "textNo"}
+                    className={eatable === "Yes" ? "textYes" : "textNo"}
                     variant="h3"
                   >
                     {eatable}
