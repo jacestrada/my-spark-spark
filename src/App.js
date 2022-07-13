@@ -1,7 +1,8 @@
 import logo from "./logo_alt.jpg";
 import background from "./background.jpg";
+import Axios from "axios";
 import "./App.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Grid,
@@ -14,19 +15,24 @@ import {
 } from "@mui/material";
 
 export default function App() {
-  const defaultProps = {
-    options: Foods,
-    getOptionLabel: (option) => option.name,
-  };
   const [eatable, setBool] = useState("");
-  const [source] = useState(
-    "https://www.akc.org/expert-advice/nutrition/can-dogs-eat-popcorn/#:~:text=Plain%2C%20air%2Dpopped%20popcorn%20is,probably%20won't%20hurt%20him."
-  );
+  const [source, setSource] = useState("");
+  const [foods, setFoods] = useState([]);
+
+  const onChangeSelected = (e, value) => {
+    setSource(value.Food_Source);
+    setBool(value.Food_Bool);
+  };
+
+  useEffect(() => {
+    Axios.get("http://localhost:3001/api/get").then((response) => {
+      setFoods(response.data);
+    });
+  }, []);
 
   return (
     <Grid
       container
-      spacing={0}
       direction="column"
       alignItems="center"
       justify="center"
@@ -38,9 +44,8 @@ export default function App() {
     >
       <Card
         sx={{
-          p: 2,
+          p: 1,
           mt: 5,
-          maxWidth: 400,
         }}
       >
         <Grid container direction="column">
@@ -51,16 +56,14 @@ export default function App() {
               pb: 2,
             }}
           >
-            <header>
-              <img width={400} src={logo} alt="logo" />
-            </header>
+            <img width={360} src={logo} alt="logo" />
           </Grid>
 
           <Grid
             item
             xs={4}
             sx={{
-              ml: 4,
+              ml: 1,
               pb: 2,
             }}
           >
@@ -75,9 +78,12 @@ export default function App() {
             }}
           >
             <Autocomplete
-              {...defaultProps}
+              options={foods}
+              onChange={onChangeSelected}
+              getOptionLabel={(foods) => foods.Food}
+              isOptionEqualToValue={(option, value) => foods.id === value.id}
               renderInput={(params) => (
-                <TextField {...params} l variant="standard" />
+                <TextField {...params} variant="standard" />
               )}
             />
           </Grid>
@@ -89,22 +95,12 @@ export default function App() {
             container
             justifyContent="center"
             spacing={2}
-          >
-            <Grid item xs={4}>
-              <Button
-                onClick={() => setBool("No")}
-                fullWidth
-                variant="contained"
-              >
-                Search
-              </Button>
-            </Grid>
-          </Grid>
+          ></Grid>
 
           {eatable !== "" ? (
             <>
               <Divider />
-              <Grid container alignContent="center">
+              <Grid width={360} container alignContent="center">
                 <Grid
                   item
                   xs={3}
@@ -135,9 +131,3 @@ export default function App() {
     </Grid>
   );
 }
-
-const Foods = [
-  { name: "Plain Popcorn", bool: "Yes" },
-  { name: "Butter Popcorn", bool: "No" },
-  { name: "Grapes", bool: "No" },
-];
