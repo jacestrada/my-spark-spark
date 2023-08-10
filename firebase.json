@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "spark",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
