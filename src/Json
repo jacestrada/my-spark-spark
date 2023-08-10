@@ -1,0 +1,4 @@
+[{"ID":1, "Food":"Plain Popcorn", "Food_Bool":"Yes", "Food_Source":"https://www.akc.org/expert-advice/nutrition/can-dogs-eat-popcorn/#:~:text=Plain%2C%20air%2Dpopped%20popcorn%20is,probably%20won't%20hurt%20him."},
+ {"ID":2, "Food":"Butter Popcorn", "Food_Bool":"No", "Food_Source":"https://www.akc.org/expert-advice/nutrition/can-dogs-eat-popcorn/#:~:text=Plain%2C%20air%2Dpopped%20popcorn%20is,probably%20won't%20hurt%20him."},
+ {"ID":3, "Food":"Grapes", "Food_Bool":"No", "Food_Source":"https://www.akc.org/expert-advice/nutrition/can-dogs-eat-grapes/#:~:text=The%20answer%20(and%20this%20goes,the%20fruit%20causes%20this%20reaction."},
+ {"ID":4, "Food":"Dry Roasted, Unsalted Peanuts", "Food_Bool":"Yes", "Food_Source":"https://www.akc.org/expert-advice/nutrition/can-dogs-eat-peanuts/"}]
