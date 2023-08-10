@@ -1,10 +1,9 @@
 import logo from "./logo_alt.jpg";
 import background from "./background.jpg";
-import Axios from "axios";
 import "./App.css";
+import myData from './api/data.json';
 import React, { useState, useEffect } from "react";
 import {
-  Button,
   Grid,
   Card,
   Autocomplete,
@@ -20,14 +19,15 @@ export default function App() {
   const [foods, setFoods] = useState([]);
 
   const onChangeSelected = (e, value) => {
-    setSource(value.Food_Source);
-    setBool(value.Food_Bool);
+    if (value != null) {
+      setSource(value.Food_Source);
+      setBool(value.Food_Bool);
+    }
+
   };
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/api/get").then((response) => {
-      setFoods(response.data);
-    });
+    setFoods(myData);
   }, []);
 
   return (
