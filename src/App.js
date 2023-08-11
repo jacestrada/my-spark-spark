@@ -1,9 +1,14 @@
 import logo from "./logo_alt.jpg";
 import background from "./background.jpg";
 import "./App.css";
-import myData from './api/data.json';
+import { db } from "./config";
+import { ref, onValue } from 'firebase/database'
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+import 'firebase/compat/database'
 import React, { useState, useEffect } from "react";
 import {
+  Alert,
   Grid,
   Card,
   Autocomplete,
@@ -17,6 +22,7 @@ export default function App() {
   const [eatable, setBool] = useState("");
   const [source, setSource] = useState("");
   const [foods, setFoods] = useState([]);
+  const [open, setOpen] = useState(true);
 
   const onChangeSelected = (e, value) => {
     if (value != null) {
@@ -26,8 +32,21 @@ export default function App() {
 
   };
 
+  function handleClose() {
+    setOpen(false);
+  }
+
   useEffect(() => {
-    setFoods(myData);
+    const starCountRef = ref(db, 'Foods/');
+    onValue(starCountRef, (snapshot) => {
+      const data = snapshot.val()
+      const newFoods = Object.keys(data).map(key => ({
+        id: key,
+        ...data[key]
+      }))
+      setFoods(newFoods)
+    })
+
   }, []);
 
   return (
@@ -42,6 +61,11 @@ export default function App() {
         backgroundImage: `url(${background})`,
       }}
     >
+      {open && (
+        <Alert severity="info" onClose={handleClose}>
+          Welcome! Food options will be updated weekly.
+        </Alert>
+      )}
       <Card
         sx={{
           p: 1,
@@ -81,7 +105,7 @@ export default function App() {
               options={foods}
               onChange={onChangeSelected}
               getOptionLabel={(foods) => foods.Food}
-              isOptionEqualToValue={(option, value) => foods.id === value.id}
+              isOptionEqualToValue={(option, value) => foods.key === value.key}
               renderInput={(params) => (
                 <TextField {...params} variant="standard" />
               )}
@@ -96,7 +120,6 @@ export default function App() {
             justifyContent="center"
             spacing={2}
           ></Grid>
-
           {eatable !== "" ? (
             <>
               <Divider />
