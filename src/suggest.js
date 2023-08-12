@@ -18,7 +18,7 @@ import {
 
 export default function App() {
     const [foodName, setFoodName] = useState('')
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     function dataAdd() {
         set(ref(db, 'Suggestions/' + foodName), {
