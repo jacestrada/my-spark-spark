@@ -45,7 +45,7 @@ export default function App() {
             icon={action.icon}
             tooltipTitle={action.name}
             tooltipOpen
-            onClick={action.link}
+            onClick={handleClose}
           />
         ))}
       </SpeedDial>
