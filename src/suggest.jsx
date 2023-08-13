@@ -1,5 +1,3 @@
-
-import background from "./background.jpg";
 import logo from "./logo_alt.jpg";
 import "./App.css";
 import { db } from "./config";
@@ -57,10 +55,6 @@ export default function Suggest() {
             alignItems="center"
             justify="center"
             style={{ minHeight: "93vh" }}
-            sx={{
-                display: "flex",
-                backgroundImage: `url(${background})`,
-            }}
         >
             {open && (
                 <Alert severity={severity} onClose={handleAlertClose}>
@@ -90,7 +84,6 @@ export default function Suggest() {
                         fullWidth
                         id="foodName"
                         label="Food Name"
-                        autoFocus
                         value={foodName}
                         onChange={(event) => {
                             setFoodName(event.target.value);

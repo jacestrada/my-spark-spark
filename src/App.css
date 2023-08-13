@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-color: darkslategray;
+  background-color: #212121;
 }
 
 
@@ -18,16 +18,14 @@ input {
   outline: none;
 }
 
-p{
+p {
   word-wrap: break-word;
 }
 
-.textYes{
+.textYes {
   color: green;
 }
 
-.textNo{
+.textNo {
   color: red;
 }
-
-

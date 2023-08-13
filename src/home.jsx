@@ -1,5 +1,4 @@
 import logo from "./logo_alt.jpg";
-import background from "./background.jpg";
 import "./App.css";
 import { db } from "./config";
 import { ref, onValue } from 'firebase/database'
@@ -59,10 +58,7 @@ export default function App() {
             alignItems="center"
             justify="center"
             style={{ minHeight: "93vh" }}
-            sx={{
-                display: "flex",
-                backgroundImage: `url(${background})`,
-            }}
+
         >
             {open && (
                 <Alert severity="info" onClose={handleAlertClose}>
@@ -95,7 +91,7 @@ export default function App() {
                         getOptionLabel={(foods) => foods.Food}
                         isOptionEqualToValue={(_option, value) => foods.key === value.key}
                         renderInput={(params) => (
-                            <TextField {...params} variant="outlined" />
+                            <TextField {...params} fullWidth variant="outlined" />
                         )}
                     />
                     <Grid
