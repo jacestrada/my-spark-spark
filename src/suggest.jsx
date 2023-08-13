@@ -1,8 +1,9 @@
 
 import background from "./background.jpg";
+import logo from "./logo_alt.jpg";
 import "./App.css";
 import { db } from "./config";
-import { ref, set } from 'firebase/database'
+import { ref, set, onValue } from 'firebase/database'
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import 'firebase/compat/database'
@@ -16,16 +17,31 @@ import {
 } from "@mui/material";
 
 
-export default function App() {
+export default function Suggest() {
     const [foodName, setFoodName] = useState('')
     const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState("")
+    const [severity, setSeverity] = useState("success")
 
     function dataAdd() {
-        set(ref(db, 'Suggestions/' + foodName), {
-            foodName: foodName
-        })
-        setFoodName('')
-        setOpen(true)
+        const foodRef = ref(db, 'Suggestions/');
+        onValue(foodRef, (snapshot) => {
+            if (snapshot.hasChild(foodName)) {
+                setSeverity("error")
+                setMessage("The food item is already in review")
+                setOpen(true)
+            } else {
+                set(ref(db, 'Suggestions/' + foodName), {
+                    foodName: foodName,
+                    date: new Date().toLocaleString(),
+                })
+                setFoodName('')
+                setMessage("The food item has been submitted for review.")
+                setOpen(true)
+                setSeverity("success")
+            }
+        });
+
     }
 
     function handleAlertClose() {
@@ -40,15 +56,15 @@ export default function App() {
             direction="column"
             alignItems="center"
             justify="center"
-            style={{ minHeight: "100vh" }}
+            style={{ minHeight: "93vh" }}
             sx={{
                 display: "flex",
                 backgroundImage: `url(${background})`,
             }}
         >
             {open && (
-                <Alert severity="success" onClose={handleAlertClose}>
-                    The food item has been submitted for review.
+                <Alert severity={severity} onClose={handleAlertClose}>
+                    {message}
                 </Alert>
             )}
             <Card
@@ -58,6 +74,15 @@ export default function App() {
                 }}
             >
                 <Grid container direction="column">
+                    <Grid
+                        item
+                        xs={12}
+                        sx={{
+                            pb: 2,
+                        }}
+                    >
+                        <img width={360} src={logo} alt="logo" />
+                    </Grid>
                     <p>Type a food name that you would like to be added to our database</p>
                     <TextField
                         name="foodName"

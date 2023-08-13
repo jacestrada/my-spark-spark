@@ -40,8 +40,8 @@ export default function App() {
     }
 
     useEffect(() => {
-        const starCountRef = ref(db, 'Foods/');
-        onValue(starCountRef, (snapshot) => {
+        const foodRef = ref(db, 'Foods/');
+        onValue(foodRef, (snapshot) => {
             const data = snapshot.val()
             const newFoods = Object.keys(data).map(key => ({
                 id: key,
@@ -58,7 +58,7 @@ export default function App() {
             direction="column"
             alignItems="center"
             justify="center"
-            style={{ minHeight: "100vh" }}
+            style={{ minHeight: "93vh" }}
             sx={{
                 display: "flex",
                 backgroundImage: `url(${background})`,
@@ -87,35 +87,17 @@ export default function App() {
                         <img width={360} src={logo} alt="logo" />
                     </Grid>
 
-                    <Grid
-                        item
-                        xs={4}
-                        sx={{
-                            ml: 1,
-                            pb: 2,
-                        }}
-                    >
-                        <label>Search for a food to see if your dog can eat it </label>
-                    </Grid>
-                    <Grid
-                        item
-                        xs={4}
-                        sx={{
-                            mx: 4,
-                            pb: 4,
-                        }}
-                    >
-                        <Autocomplete
-                            options={foods}
-                            onChange={onChangeSelected}
-                            getOptionLabel={(foods) => foods.Food}
-                            isOptionEqualToValue={(_option, value) => foods.key === value.key}
-                            renderInput={(params) => (
-                                <TextField {...params} variant="standard" />
-                            )}
-                        />
-                    </Grid>
-
+                    <p>Search for a food to see if your dog can eat it </p>
+                    <Autocomplete
+                        fullWidth
+                        options={foods}
+                        onChange={onChangeSelected}
+                        getOptionLabel={(foods) => foods.Food}
+                        isOptionEqualToValue={(_option, value) => foods.key === value.key}
+                        renderInput={(params) => (
+                            <TextField {...params} variant="outlined" />
+                        )}
+                    />
                     <Grid
                         sx={{
                             pb: 4,
