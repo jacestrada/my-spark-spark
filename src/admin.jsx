@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { Dialog, Paper, TableRow, TableHead, TableContainer, TableBody, Table, Button, TextField, DialogContent, DialogActions } from '@mui/material';
 import { db } from "./config";
-import { ref, onValue, remove } from 'firebase/database'
+import { ref, onValue, remove, set } from 'firebase/database'
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import 'firebase/compat/database'
 import AddIcon from '@mui/icons-material/Add';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import Button from '@mui/material/Button';
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -40,6 +35,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function CustomizedTables(adminBool) {
     const [foods, setFoods] = useState([]);
+    const [open, setOpen] = React.useState(false);
+    const [foodName, setFoodName] = useState('')
+    const [foodBool, setFoodBool] = useState('')
+    const [foodSource, setFoodSource] = useState('')
 
     useEffect(() => {
         getTableData()
@@ -47,29 +46,104 @@ export default function CustomizedTables(adminBool) {
     }, [adminBool]);
 
     function getTableData() {
-        const starCountRef = ref(db, 'Suggestions/');
-        onValue(starCountRef, (snapshot) => {
+        const suggestedRef = ref(db, 'Suggestions/');
+        onValue(suggestedRef, (snapshot) => {
             const data = snapshot.val()
+            if (data === null) {
+                setFoods([])
+                return
+            }
             const newFoods = Object.keys(data).map(key => ({
                 id: key,
                 ...data[key]
             }))
             setFoods(newFoods)
         })
-
     }
 
-    function deleteData(foodName) {
-        remove(ref(db, 'Suggestions/' + foodName)).then(() => {
-            console.log("removed")
+    async function dataAdd() {
+        await set(ref(db, 'Foods/' + foodName), {
+            Food: foodName,
+            Food_Bool: foodBool,
+            Food_Source: foodSource
+        })
+        await remove(ref(db, 'Suggestions/' + foodName)).then(() => {
+            setFoodName('')
+            setFoodBool('')
+            setFoodSource('')
+            handleClose()
+            getTableData()
         })
             .catch((error) => {
                 console.log(error.message)
             })
+
     }
+
+    async function deleteData() {
+        await remove(ref(db, 'Suggestions/' + foodName)).then(() => {
+        })
+            .catch((error) => {
+                console.log(error.message)
+            })
+        getTableData()
+    }
+    const handleClickOpen = (food) => {
+        setOpen(true);
+        setFoodName(food)
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
         <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <Dialog open={open} onClose={handleClose}>
+                <DialogContent>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="foodName"
+                        label="Food Name"
+                        fullWidth
+                        variant="outlined"
+                        value={foodName}
+                        onChange={(event) => {
+                            setFoodName(event.target.value);
+                        }}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="foodBool"
+                        label="Food Bool"
+                        fullWidth
+                        variant="outlined"
+                        value={foodBool}
+                        onChange={(event) => {
+                            setFoodBool(event.target.value);
+                        }}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="foodSource"
+                        label="Food Source"
+                        fullWidth
+                        variant="outlined"
+                        value={foodSource}
+                        onChange={(event) => {
+                            setFoodSource(event.target.value);
+                        }}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} variant="contained">Cancel</Button>
+                    <Button onClick={dataAdd} variant="contained" color="success">Submit</Button>
+                </DialogActions>
+            </Dialog>
+            {foods.length > 0 ? (<Table sx={{ maxWidth: 1200 }} aria-label="customized table">
                 <TableHead>
                     <TableRow>
                         <StyledTableCell >Foods Pending</StyledTableCell>
@@ -79,7 +153,7 @@ export default function CustomizedTables(adminBool) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {foods.map((row, index) => (
+                    {foods.map((row) => (
                         <StyledTableRow key={row.foodName}>
                             <StyledTableCell component="th" scope="row">
                                 {row.foodName}
@@ -88,7 +162,7 @@ export default function CustomizedTables(adminBool) {
                                 {row.date}
                             </StyledTableCell>
                             <StyledTableCell component="th" scope="row">
-                                <Button color="success" variant="contained" startIcon={<AddIcon />}>
+                                <Button onClick={() => handleClickOpen(row.foodName)} color="success" variant="contained" startIcon={<AddIcon />}>
                                     Add
                                 </Button>
                             </StyledTableCell>
@@ -100,7 +174,7 @@ export default function CustomizedTables(adminBool) {
                         </StyledTableRow>
                     ))}
                 </TableBody>
-            </Table>
+            </Table>) : null}
         </TableContainer >
     );
 }

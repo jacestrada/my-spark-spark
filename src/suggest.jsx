@@ -77,7 +77,7 @@ export default function Suggest() {
                     >
                         <img width={360} src={logo} alt="logo" />
                     </Grid>
-                    <p>Type a food name that you would like to be added to our database</p>
+                    <p>Make a food suggestion!</p>
                     <TextField
                         name="foodName"
                         variant="outlined"

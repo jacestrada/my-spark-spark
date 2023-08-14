@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 
 import Admin from "./admin"
+import FoodTable from "./foodTable"
 
 
 const SignIn = () => {
@@ -23,7 +24,6 @@ const SignIn = () => {
         e.preventDefault();
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                console.log(userCredential)
             })
             .catch((error) => {
                 setOpen(true)
@@ -103,12 +103,23 @@ const SignIn = () => {
                             <p>Signed Out</p>
                         )}
                     </div>
-                    <div> {authUser ? (
-                        <Admin adminBool={adminBool} />
-                    ) : (
-                        null
-                    )}
-                    </div>
+                    <Grid container
+                        direction="column"
+                        alignItems="center"
+                        justify="center">{authUser ? (
+                            <Grid
+                                item
+                                xs={12}
+                                sx={{
+                                    pb: 2,
+                                }}>
+                                <Admin adminBool={adminBool} /><FoodTable adminBool={adminBool} />
+                            </Grid>
+                        ) : (
+                            null
+                        )}
+                    </Grid>
+
                 </div>
             </Card>
 

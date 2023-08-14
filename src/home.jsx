@@ -18,20 +18,17 @@ import {
     Link,
 } from "@mui/material";
 
-export default function App() {
-
+export default function Home() {
     const [eatable, setBool] = useState("");
     const [source, setSource] = useState("");
     const [foods, setFoods] = useState([]);
     const [open, setOpen] = useState(true);
-
 
     const onChangeSelected = (_e, value) => {
         if (value != null) {
             setSource(value.Food_Source);
             setBool(value.Food_Bool);
         }
-
     };
 
     function handleAlertClose() {
@@ -57,51 +54,37 @@ export default function App() {
             direction="column"
             alignItems="center"
             justify="center"
-            style={{ minHeight: "93vh" }}
-
-        >
+            style={{ minHeight: "93vh" }} >
             {open && (
                 <Alert severity="info" onClose={handleAlertClose}>
                     Welcome! Food options will be updated weekly.
                 </Alert>
             )}
-
             <Card
                 sx={{
                     p: 1,
                     mt: 5,
-                }}
-            >
+                }}>
                 <Grid container direction="column">
                     <Grid
                         item
                         xs={12}
                         sx={{
                             pb: 2,
-                        }}
-                    >
+                        }}>
                         <img width={360} src={logo} alt="logo" />
-                    </Grid>
 
-                    <p>Search for a food to see if your dog can eat it </p>
-                    <Autocomplete
-                        fullWidth
-                        options={foods}
-                        onChange={onChangeSelected}
-                        getOptionLabel={(foods) => foods.Food}
-                        isOptionEqualToValue={(_option, value) => foods.key === value.key}
-                        renderInput={(params) => (
-                            <TextField {...params} fullWidth variant="outlined" />
-                        )}
-                    />
-                    <Grid
-                        sx={{
-                            pb: 4,
-                        }}
-                        container
-                        justifyContent="center"
-                        spacing={2}
-                    ></Grid>
+                        <p>Search for a food to see if your dog can eat it </p>
+                        <Autocomplete
+                            fullWidth
+                            options={foods}
+                            onChange={onChangeSelected}
+                            getOptionLabel={(foods) => foods.Food}
+                            isOptionEqualToValue={(_option, value) => foods.key === value.key}
+                            renderInput={(params) => (
+                                <TextField {...params} fullWidth variant="outlined" />
+                            )} />
+                    </Grid>
                     {eatable !== "" ? (
                         <>
                             <Divider />
