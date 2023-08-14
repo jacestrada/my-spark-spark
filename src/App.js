@@ -74,7 +74,7 @@ export default function App() {
         <Backdrop open={openSpeed} />
         <SpeedDial
           ariaLabel="SpeedDial"
-          sx={{ position: 'absolute', bottom: 16, right: 16 }}
+          sx={{ position: 'fixed', bottom: 0, right: 16 }}
           icon={<SpeedDialIcon />}
           onClose={handleClose}
           onOpen={handleOpen}
