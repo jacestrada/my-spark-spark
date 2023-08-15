@@ -33,7 +33,7 @@ const SignIn = () => {
 
     useEffect(() => {
         const listen = onAuthStateChanged(auth, (user) => {
-            if (user) {
+            if (user.uid == "ZrNVX9d3MwSktPHTExIUkjMIPSM2") {
                 setAdminBool(true)
                 setAuthUser(user);
             } else {
@@ -50,7 +50,7 @@ const SignIn = () => {
     const userSignOut = () => {
         signOut(auth)
             .then(() => {
-                console.log("sign out successful");
+                window.location.reload();
             })
             .catch((error) => console.log(error));
     };

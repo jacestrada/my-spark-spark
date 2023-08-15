@@ -1,10 +1,11 @@
-import * as React from 'react';
+import React, { useEffect } from "react";
 import { Routes, Route, Link } from 'react-router-dom';
 import background from "./background.jpg";
 import Home from './home';
 import Suggest from './suggest';
 import SignIn from './signIn'
 import Admin from './admin'
+import { getAuth, signInAnonymously } from "firebase/auth";
 
 import {
   SpeedDial,
@@ -29,8 +30,6 @@ const actions = [
   { icon: withLink("/", <HomeIcon />), name: 'Home' },
 ];
 
-
-
 const darkTheme = createTheme({
   palette: {
     mode: 'light',
@@ -44,6 +43,22 @@ export default function App() {
   const handleOpen = () => setOpenDpeed(true);
   const handleClose = () => setOpenDpeed(false);
   const [openSpeed, setOpenDpeed] = React.useState(false);
+
+  useEffect(() => {
+    getAuth()
+
+  }, []);
+
+  const auth = getAuth();
+  signInAnonymously(auth)
+    .then(() => {
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode)
+      console.log(errorMessage)
+    });
 
   return (
     <div className="App">

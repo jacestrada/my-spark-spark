@@ -1,7 +1,0 @@
-{
-    "name": "mysparkspark",
-    "integrations": {
-        "capacitor": {}
-    },
-    "type": "react"
-}
