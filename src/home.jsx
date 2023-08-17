@@ -48,11 +48,11 @@ export default function Home() {
             direction="column"
             alignItems="center"
             justify="center"
-            style={{ minHeight: "93vh" }} >
+            style={{ minHeight: "100vh" }} >
             <Card
                 sx={{
                     p: 1,
-                    mt: 5,
+                    mt: 1,
                 }}>
                 <Grid container direction="column">
                     <Grid
@@ -61,7 +61,7 @@ export default function Home() {
                         sx={{
                             pb: 2,
                         }}>
-                        <img width={360} src={logo} alt="logo" />
+                        <img width={450} src={logo} alt="logo" />
 
                         <p>Search for a food to see if your dog can eat it </p>
                         <Autocomplete
