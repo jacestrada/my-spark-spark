@@ -8,7 +8,6 @@ import 'firebase/compat/database'
 import React, { useState, useEffect } from "react";
 
 import {
-    Alert,
     Grid,
     Card,
     Autocomplete,
@@ -22,7 +21,6 @@ export default function Home() {
     const [eatable, setBool] = useState("");
     const [source, setSource] = useState("");
     const [foods, setFoods] = useState([]);
-    const [open, setOpen] = useState(true);
 
     const onChangeSelected = (_e, value) => {
         if (value != null) {
@@ -30,10 +28,6 @@ export default function Home() {
             setBool(value.Food_Bool);
         }
     };
-
-    function handleAlertClose() {
-        setOpen(false);
-    }
 
     useEffect(() => {
         const foodRef = ref(db, 'Foods/');
@@ -55,11 +49,6 @@ export default function Home() {
             alignItems="center"
             justify="center"
             style={{ minHeight: "93vh" }} >
-            {open && (
-                <Alert severity="info" onClose={handleAlertClose}>
-                    Welcome! Food options will be updated weekly.
-                </Alert>
-            )}
             <Card
                 sx={{
                     p: 1,

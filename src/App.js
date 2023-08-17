@@ -12,17 +12,11 @@ import {
   SpeedDialIcon,
   SpeedDialAction,
   Backdrop,
-  Typography,
-  AppBar,
-  Toolbar,
-  IconButton,
-  Box
 } from "@mui/material";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import HomeIcon from '@mui/icons-material/Home';
-import EngineeringIcon from '@mui/icons-material/Engineering';
 
 const withLink = (to, children) => <Link to={to}>{children}</Link>;
 const actions = [
@@ -63,23 +57,6 @@ export default function App() {
   return (
     <div className="App">
       <ThemeProvider theme={darkTheme}>
-        <AppBar position="sticky" component="nav" sx={{
-          display: "flex",
-          backgroundImage: `url(${background})`
-        }}>
-          <Toolbar>
-            <Typography variant="h6" component="div" sx={{
-              flexGrow: 1
-            }}>
-            </Typography>
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <Link to="/signIn"><IconButton >
-                <EngineeringIcon />
-              </IconButton></Link>
-
-            </Box>
-          </Toolbar>
-        </AppBar >
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/suggest" element={<Suggest />} />
