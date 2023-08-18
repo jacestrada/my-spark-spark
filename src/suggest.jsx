@@ -9,7 +9,6 @@ import React, { useState } from "react";
 import {
     Alert,
     Grid,
-    Card,
     TextField,
     Button
 } from "@mui/material";
@@ -61,45 +60,38 @@ export default function Suggest() {
                     {message}
                 </Alert>
             )}
-            <Card
-                sx={{
-                    p: 1,
-                    mt: 5,
-                }}
-            >
-                <Grid container direction="column">
-                    <Grid
-                        item
-                        xs={12}
-                        sx={{
-                            pb: 2,
-                        }}
-                    >
-                        <img width={360} src={logo} alt="logo" />
-                    </Grid>
-                    <p>Make a food suggestion!</p>
-                    <TextField
-                        name="foodName"
-                        variant="outlined"
-                        fullWidth
-                        id="foodName"
-                        label="Food Name"
-                        value={foodName}
-                        onChange={(event) => {
-                            setFoodName(event.target.value);
-                        }}
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        onClick={dataAdd}
-                    >
-                        Submit
-                    </Button>
+            <Grid container direction="column">
+                <Grid
+                    item
+                    xs={12}
+                    sx={{
+                        pb: 2,
+                        px: 2
+                    }}>
+                    <img width={385} src={logo} alt="logo" />
                 </Grid>
-            </Card>
+                <p>Make a food suggestion!</p>
+                <TextField
+                    name="foodName"
+                    variant="outlined"
+                    fullWidth
+                    id="foodName"
+                    label="Food Name"
+                    value={foodName}
+                    onChange={(event) => {
+                        setFoodName(event.target.value);
+                    }}
+                />
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={dataAdd}
+                >
+                    Submit
+                </Button>
+            </Grid>
         </Grid>
     );
 }

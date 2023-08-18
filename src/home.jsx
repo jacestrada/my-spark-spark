@@ -9,7 +9,6 @@ import React, { useState, useEffect } from "react";
 
 import {
     Grid,
-    Card,
     Autocomplete,
     TextField,
     Typography,
@@ -49,62 +48,57 @@ export default function Home() {
             alignItems="center"
             justify="center"
             style={{ minHeight: "100vh" }} >
-            <Card
-                sx={{
-                    p: 1,
-                    mt: 1,
-                }}>
-                <Grid container direction="column">
-                    <Grid
-                        item
-                        xs={12}
-                        sx={{
-                            pb: 2,
-                        }}>
-                        <img width={450} src={logo} alt="logo" />
+            <Grid container direction="column">
+                <Grid
+                    item
+                    xs={12}
+                    sx={{
+                        pb: 2,
+                        px: 2
+                    }}>
+                    <img width={385} src={logo} alt="logo" />
 
-                        <p>Search for a food to see if your dog can eat it </p>
-                        <Autocomplete
-                            fullWidth
-                            options={foods}
-                            onChange={onChangeSelected}
-                            getOptionLabel={(foods) => foods.Food}
-                            isOptionEqualToValue={(_option, value) => foods.key === value.key}
-                            renderInput={(params) => (
-                                <TextField {...params} fullWidth variant="outlined" />
-                            )} />
-                    </Grid>
-                    {eatable !== "" ? (
-                        <>
-                            <Divider />
-                            <Grid width={360} container alignContent="center">
-                                <Grid
-                                    item
-                                    xs={3}
-                                    sx={{
-                                        pt: 5,
-                                    }}
-                                >
-                                    <Typography
-                                        className={eatable === "Yes" ? "textYes" : "textNo"}
-                                        variant="h3"
-                                    >
-                                        {eatable}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={9}>
-                                    <Typography variant="button" display="block">
-                                        Source:
-                                    </Typography>
-                                    <Link target="_blank" href={source} variant="body2">
-                                        <p target="_blank" href={source}>{source}</p>
-                                    </Link>
-                                </Grid>
-                            </Grid>
-                        </>
-                    ) : null}
+                    <p>Search for a food to see if your dog can eat it </p>
+                    <Autocomplete
+                        fullWidth
+                        options={foods}
+                        onChange={onChangeSelected}
+                        getOptionLabel={(foods) => foods.Food}
+                        isOptionEqualToValue={(_option, value) => foods.key === value.key}
+                        renderInput={(params) => (
+                            <TextField {...params} fullWidth variant="outlined" />
+                        )} />
                 </Grid>
-            </Card>
+                {eatable !== "" ? (
+                    <>
+                        <Divider />
+                        <Grid width={360} container alignContent="center">
+                            <Grid
+                                item
+                                xs={3}
+                                sx={{
+                                    pt: 5,
+                                }}
+                            >
+                                <Typography
+                                    className={eatable === "Yes" ? "textYes" : "textNo"}
+                                    variant="h3"
+                                >
+                                    {eatable}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={9}>
+                                <Typography variant="button" display="block">
+                                    Source:
+                                </Typography>
+                                <Link target="_blank" href={source} variant="body2">
+                                    <p target="_blank" href={source}>{source}</p>
+                                </Link>
+                            </Grid>
+                        </Grid>
+                    </>
+                ) : null}
+            </Grid>
         </Grid>
     );
 }

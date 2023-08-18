@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route, Link } from 'react-router-dom';
 import background from "./background.jpg";
 import Home from './home';
@@ -7,22 +7,20 @@ import SignIn from './signIn'
 import Admin from './admin'
 import { getAuth, signInAnonymously } from "firebase/auth";
 
+
 import {
-  SpeedDial,
-  SpeedDialIcon,
-  SpeedDialAction,
-  Backdrop,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Menu,
+  MenuItem,
+  Box
 } from "@mui/material";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
-
-const withLink = (to, children) => <Link to={to}>{children}</Link>;
-const actions = [
-  { icon: withLink("/suggest", <ThumbUpOffAltIcon />), name: 'Suggest' },
-  { icon: withLink("/", <HomeIcon />), name: 'Home' },
-];
 
 const darkTheme = createTheme({
   palette: {
@@ -33,10 +31,10 @@ const darkTheme = createTheme({
   },
 });
 
+
 export default function App() {
-  const handleOpen = () => setOpenDpeed(true);
-  const handleClose = () => setOpenDpeed(false);
-  const [openSpeed, setOpenDpeed] = React.useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
 
   useEffect(() => {
     getAuth()
@@ -54,35 +52,59 @@ export default function App() {
       console.log(errorMessage)
     });
 
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div className="App">
       <ThemeProvider theme={darkTheme}>
+        <Box sx={{ flexGrow: 1 }}>
+          <AppBar position="sticky" component="nav" sx={{
+            display: "flex",
+            backgroundImage: `url(${background})`
+          }}>
+            <Toolbar>
+              <Link ><IconButton onClick={handleMenu} color="inherit">
+                <MenuIcon id="menu-appbar" />
+              </IconButton></Link>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right"
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
+                }}
+                open={open}
+                onClose={() => setAnchorEl(null)}
+              >
+                <MenuItem onClick={handleClose} >
+                  <HomeIcon />
+                  Home
+                </MenuItem>
+                <MenuItem onClick={handleClose} >
+                  <ThumbUpOffAltIcon />
+                  Suggest
+                </MenuItem>
+              </Menu>
+            </Toolbar>
+          </AppBar >
+        </Box>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/suggest" element={<Suggest />} />
           <Route path='/signIn' element={<SignIn />} />
           <Route path='/admin' element={<Admin />} />
         </Routes>
-        <Backdrop open={openSpeed} />
-        <SpeedDial
-          ariaLabel="SpeedDial"
-          sx={{ position: 'fixed', bottom: 0, right: 16 }}
-          icon={<SpeedDialIcon />}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          open={openSpeed}
-        >
-          {actions.map((action) => (
-            <SpeedDialAction
-              key={action.name}
-              icon={action.icon}
-              tooltipTitle={action.name}
-              tooltipOpen
-              onClick={handleClose}
-            />
-          ))}
-        </SpeedDial>
-
       </ThemeProvider>
     </div >
   );
