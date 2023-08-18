@@ -3,9 +3,6 @@
   background-color: #FFF;
 }
 
-
-
-
 input {
   margin-left: 20px;
 }
@@ -28,4 +25,9 @@ p {
 
 .textNo {
   color: red;
+}
+
+.links {
+  color: #000;
+  text-decoration: none;
 }

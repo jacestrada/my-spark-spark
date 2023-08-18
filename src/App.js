@@ -87,14 +87,18 @@ export default function App() {
                 open={open}
                 onClose={() => setAnchorEl(null)}
               >
-                <MenuItem onClick={handleClose} >
-                  <HomeIcon />
-                  Home
-                </MenuItem>
-                <MenuItem onClick={handleClose} >
-                  <ThumbUpOffAltIcon />
-                  Suggest
-                </MenuItem>
+                <Link className="links" to="/">
+                  <MenuItem onClick={handleClose} >
+                    <HomeIcon />
+                    Home
+                  </MenuItem>
+                </Link>
+                <Link className="links" to="/suggest">
+                  <MenuItem onClick={handleClose} >
+                    <ThumbUpOffAltIcon />
+                    Suggest
+                  </MenuItem>
+                </Link>
               </Menu>
             </Toolbar>
           </AppBar >
