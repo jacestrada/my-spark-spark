@@ -54,7 +54,6 @@ export default function Home() {
                     xs={12}
                     sx={{
                         pb: 2,
-                        px: 2
                     }}>
                     <img width={385} src={logo} alt="logo" />
 
