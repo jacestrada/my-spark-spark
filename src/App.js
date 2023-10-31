@@ -5,6 +5,7 @@ import Home from './home';
 import Suggest from './suggest';
 import SignIn from './signIn'
 import Admin from './admin'
+import About from './about'
 import { getAuth, signInAnonymously } from "firebase/auth";
 
 import {
@@ -23,9 +24,11 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import HomeIcon from '@mui/icons-material/Home';
 import EngineeringIcon from '@mui/icons-material/Engineering';
+import PersonIcon from '@mui/icons-material/Person';
 
 const withLink = (to, children) => <Link to={to}>{children}</Link>;
 const actions = [
+  { icon: withLink("/About", <PersonIcon />), name: 'About' },
   { icon: withLink("/suggest", <ThumbUpOffAltIcon />), name: 'Suggest' },
   { icon: withLink("/", <HomeIcon />), name: 'Home' },
 ];
@@ -85,6 +88,7 @@ export default function App() {
           <Route path="/suggest" element={<Suggest />} />
           <Route path='/signIn' element={<SignIn />} />
           <Route path='/admin' element={<Admin />} />
+          <Route path='/about' element={<About />} />
         </Routes>
         <Backdrop open={openSpeed} />
         <SpeedDial

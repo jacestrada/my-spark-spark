@@ -9,6 +9,7 @@ import React, { useState, useEffect } from "react";
 
 import {
     Alert,
+    Snackbar,
     Grid,
     Card,
     Autocomplete,
@@ -31,9 +32,24 @@ export default function Home() {
         }
     };
 
-    function handleAlertClose() {
+    function handleClose() {
         setOpen(false);
     }
+
+    // const action = (
+    //     <React.Fragment>
+    //         <IconButton
+    //             autoHideDuration={6000}
+    //             size="small"
+    //             aria-label="close"
+    //             color="inherit"
+    //             onClick={handleClose}
+
+    //         >
+    //             <CloseIcon fontSize="small" />
+    //         </IconButton>
+    //     </React.Fragment>
+    // );
 
     useEffect(() => {
         const foodRef = ref(db, 'Foods/');
@@ -56,9 +72,16 @@ export default function Home() {
             justify="center"
             style={{ minHeight: "93vh" }} >
             {open && (
-                <Alert severity="info" onClose={handleAlertClose}>
-                    Welcome! Food options will be updated weekly.
-                </Alert>
+                <Snackbar
+                    open={open}
+                    autoHideDuration={3000}
+                    onClose={handleClose}
+                    sx={{ bottom: { xs: 90, sm: 0 } }}
+                >
+                    <Alert severity="info" onClose={handleClose}>
+                        Welcome! Food options will be updated weekly.
+                    </Alert>
+                </Snackbar>
             )}
             <Card
                 sx={{
