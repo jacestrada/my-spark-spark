@@ -9,9 +9,10 @@ import React, { useState } from "react";
 import {
     Alert,
     Grid,
-    Card,
+    // Card,
     TextField,
-    Button
+    Button,
+    Typography
 } from "@mui/material";
 
 
@@ -53,7 +54,6 @@ export default function Suggest() {
             container
             direction="column"
             alignItems="center"
-            justify="center"
             style={{ minHeight: "93vh" }}
         >
             {open && (
@@ -61,45 +61,54 @@ export default function Suggest() {
                     {message}
                 </Alert>
             )}
-            <Card
-                sx={{
-                    p: 1,
-                    mt: 5,
-                }}
-            >
-                <Grid container direction="column">
-                    <Grid
-                        item
-                        xs={12}
-                        sx={{
-                            pb: 2,
-                        }}
-                    >
-                        <img width={360} src={logo} alt="logo" />
-                    </Grid>
-                    <p>Make a food suggestion!</p>
-                    <TextField
-                        name="foodName"
-                        variant="outlined"
-                        fullWidth
-                        id="foodName"
-                        label="Food Name"
-                        value={foodName}
-                        onChange={(event) => {
-                            setFoodName(event.target.value);
-                        }}
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        onClick={dataAdd}
-                    >
-                        Submit
-                    </Button>
+            <Grid container direction="row"
+                justifyContent="center">
+                <Grid
+                    item
+                    xs={12}
+                    sx={{
+                        pb: 1,
+                    }}
+                >
+                    <img width={360} src={logo} alt="logo" />
                 </Grid>
-            </Card>
+                <Typography
+                    display="block"
+                    variant="subtitle"
+                    sx={{
+                        pb: 2,
+                    }}
+                    align="center">
+                    Make a food suggestion!<br /> Check back to see if it's been approved.
+                </Typography>
+            </Grid>
+            <Grid container direction="row"
+                justifyContent="center">
+                <TextField
+                    name="foodName"
+                    variant="outlined"
+                    sx={{ width: 350, pb: 1 }}
+                    id="foodName"
+                    label="Food Name"
+                    value={foodName}
+                    onChange={(event) => {
+                        setFoodName(event.target.value);
+                    }}
+                />
+            </Grid>
+            <Grid container direction="row"
+                justifyContent="center">
+                <Button
+                    type="submit"
+                    sx={{ width: 350 }}
+                    variant="contained"
+                    color="primary"
+                    onClick={dataAdd}
+                >
+                    Submit
+                </Button>
+            </Grid>
+
         </Grid>
     );
 }

@@ -33,7 +33,7 @@ const SignIn = () => {
 
     useEffect(() => {
         const listen = onAuthStateChanged(auth, (user) => {
-            if (user.uid == "ZrNVX9d3MwSktPHTExIUkjMIPSM2") {
+            if (user.uid === "ZrNVX9d3MwSktPHTExIUkjMIPSM2") {
                 setAdminBool(true)
                 setAuthUser(user);
             } else {
